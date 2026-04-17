@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chúc Mừng Sinh Nhật</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Dancing+Script:wght@600;700&family=Lora:ital,wght@0,400;1,400;1,600&display=swap" rel="stylesheet">
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+         :root {
+            --gold: #d4a842;
+            --rose: #e8637a;
+            --deep: #1a0a14;
+            --cream: #fdf6ee;
+            --blush: #f9dde4;
+        }
+        
+        body {
+            background: var(--deep);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Lora', serif;
+            overflow: hidden;
+            position: relative;
+        }
+        /* ── Stars background ── */
+        
+        .stars {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+        }
+        
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle var(--d) infinite ease-in-out;
+            opacity: 0;
+        }
+        
+        @keyframes twinkle {
+            0%,
+            100% {
+                opacity: 0
+            }
+            50% {
+                opacity: var(--op)
+            }
+        }
+        /* ── Main stage ── */
+        
+        .stage {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 28px;
+        }
+        /* ── Title above box ── */
+        
+        .title-area {
+            text-align: center;
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: all 0.8s ease;
+        }
+        
+        .title-area.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .congrats-text {
+            font-family: 'Dancing Script', cursive;
+            font-size: clamp(2rem, 6vw, 3.6rem);
+            color: var(--gold);
+            text-shadow: 0 0 30px rgba(212, 168, 66, .6), 0 0 60px rgba(212, 168, 66, .3);
+            animation: glowPulse 2s ease-in-out infinite;
+            line-height: 1.2;
+        }
+        
+        .congrats-sub {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: clamp(1rem, 2.5vw, 1.3rem);
+            color: var(--blush);
+            margin-top: 6px;
+            letter-spacing: 0.1em;
+        }
+        
+        @keyframes glowPulse {
+            0%,
+            100% {
+                text-shadow: 0 0 20px rgba(212, 168, 66, .5), 0 0 40px rgba(212, 168, 66, .2)
+            }
+            50% {
+                text-shadow: 0 0 40px rgba(212, 168, 66, .9), 0 0 80px rgba(212, 168, 66, .5)
+            }
+        }
+        /* ── Gift box ── */
+        
+        .gift-wrap {
+            position: relative;
+            cursor: pointer;
+            user-select: none;
+            filter: drop-shadow(0 20px 40px rgba(232, 99, 122, .35));
+            transition: transform 0.2s ease;
+        }
+        
+        .gift-wrap:hover {
+            transform: scale(1.04) translateY(-4px);
+        }
+        
+        .gift-wrap:active {
+            transform: scale(0.97);
+        }
+        
+        .box-body {
+            width: 170px;
+            height: 140px;
+            background: linear-gradient(145deg, #e8637a, #c0364f);
+            border-radius: 8px 8px 10px 10px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .box-body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 22px;
+            height: 100%;
+            background: rgba(255, 255, 255, .15);
+        }
+        
+        .box-body::after {
+            content: '🎁';
+            position: absolute;
+            font-size: 48px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            filter: grayscale(0);
+            opacity: .25;
+        }
+        /* shine sweep */
+        
+        .box-body .shine {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(110deg, transparent 30%, rgba(255, 255, 255, .18) 50%, transparent 70%);
+            transform: translateX(-100%);
+            animation: shineSweep 3s ease-in-out infinite;
+        }
+        
+        @keyframes shineSweep {
+            0% {
+                transform: translateX(-100%)
+            }
+            40%,
+            100% {
+                transform: translateX(200%)
+            }
+        }
+        
+        .box-lid {
+            width: 178px;
+            height: 38px;
+            background: linear-gradient(145deg, #f07a8e, #d4415a);
+            border-radius: 7px 7px 2px 2px;
+            position: relative;
+            margin-bottom: -2px;
+            transform-origin: bottom center;
+            transition: transform 0.6s cubic-bezier(.34, 1.56, .64, 1);
+        }
+        
+        .box-lid::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 22px;
+            height: 100%;
+            background: rgba(255, 255, 255, .15);
+        }
+        /* bow */
+        
+        .bow {
+            position: absolute;
+            top: -22px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 70px;
+            height: 44px;
+            pointer-events: none;
+        }
+        
+        .bow-left,
+        .bow-right {
+            position: absolute;
+            width: 28px;
+            height: 20px;
+            border-radius: 50% 50% 0 50%;
+            background: linear-gradient(135deg, #ffd97d, var(--gold));
+            border: 1.5px solid rgba(255, 255, 255, .3);
+            top: 0;
+        }
+        
+        .bow-left {
+            left: 4px;
+            transform: rotate(-20deg);
+        }
+        
+        .bow-right {
+            right: 4px;
+            transform: rotate(20deg) scaleX(-1);
+        }
+        
+        .bow-center {
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            background: radial-gradient(circle, #ffe599, #d4a842);
+            border-radius: 50%;
+            top: 2px;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 1.5px solid rgba(255, 255, 255, .4);
+        }
+        
+        .bow-ribbon-v,
+        .bow-ribbon-h {
+            position: absolute;
+            background: linear-gradient(to bottom, #ffd970, var(--gold));
+        }
+        
+        .bow-ribbon-v {
+            width: 10px;
+            height: 44px;
+            left: 50%;
+            transform: translateX(-50%);
+            top: 8px;
+            border-radius: 0 0 4px 4px;
+        }
+        /* lid open state */
+        
+        .gift-wrap.opened .box-lid {
+            transform: perspective(300px) rotateX(-115deg) translateY(-6px);
+        }
+        /* sparkles burst */
+        
+        .sparkle-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            pointer-events: none;
+            z-index: 20;
+        }
+        
+        .sparkle {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            opacity: 0;
+        }
+        /* ── Bottom row: button + image ── */
+        
+        .bottom-row {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-top: 4px;
+        }
+        
+        .open-letter-btn {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.25rem;
+            color: var(--deep);
+            background: linear-gradient(135deg, #ffd97d, var(--gold));
+            border: none;
+            padding: 12px 30px;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(212, 168, 66, .5);
+            transition: transform .2s, box-shadow .2s;
+            letter-spacing: .05em;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .open-letter-btn::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(110deg, transparent 30%, rgba(255, 255, 255, .35) 50%, transparent 70%);
+            transform: translateX(-100%);
+            transition: transform .5s;
+        }
+        
+        .open-letter-btn:hover::before {
+            transform: translateX(200%);
+        }
+        
+        .open-letter-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(212, 168, 66, .7);
+        }
+        
+        .open-letter-btn:active {
+            transform: scale(.96);
+        }
+        
+        .photo-thumb {
+            width: 72px;
+            height: 72px;
+            border-radius: 12px;
+            object-fit: cover;
+            border: 3px solid var(--gold);
+            box-shadow: 0 4px 18px rgba(212, 168, 66, .4);
+            cursor: pointer;
+            transition: transform .2s, box-shadow .2s;
+            background: linear-gradient(135deg, #ffd97d44, #e8637a44);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+        }
+        
+        .photo-thumb:hover {
+            transform: scale(1.1) rotate(3deg);
+            box-shadow: 0 8px 26px rgba(212, 168, 66, .6);
+        }
+        /* ── Letter overlay ── */
+        
+        .letter-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(10, 4, 10, .75);
+            backdrop-filter: blur(6px);
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity .4s ease;
+        }
+        
+        .letter-overlay.open {
+            opacity: 1;
+            pointer-events: all;
+        }
+        
+        .envelope {
+            position: relative;
+            width: min(520px, 92vw);
+            transform: scale(.4) translateY(80px);
+            opacity: 0;
+            transition: transform .6s cubic-bezier(.34, 1.4, .64, 1), opacity .5s ease;
+        }
+        
+        .letter-overlay.open .envelope {
+            transform: scale(1) translateY(0);
+            opacity: 1;
+        }
+        /* envelope back */
+        
+        .env-back {
+            width: 100%;
+            height: 260px;
+            background: linear-gradient(160deg, #f5e6c8, #eeddb4);
+            border-radius: 10px 10px 0 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .env-back::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 50%;
+            background: linear-gradient(to top, rgba(180, 130, 60, .1), transparent);
+        }
+        /* envelope flap */
+        
+        .env-flap {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 0;
+            border-left: calc(min(520px, 92vw)/2) solid transparent;
+            border-right: calc(min(520px, 92vw)/2) solid transparent;
+            border-top: 130px solid #e8c97a;
+            transform-origin: top center;
+            animation: openFlap 1s ease forwards;
+            animation-delay: .5s;
+            z-index: 5;
+        }
+        
+        @keyframes openFlap {
+            to {
+                transform: perspective(400px) rotateX(-180deg);
+            }
+        }
+        /* letter paper */
+        
+        .letter-paper {
+            background: var(--cream);
+            border-radius: 6px;
+            padding: 36px 40px 32px;
+            position: relative;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, .25);
+            margin-top: -12px;
+            transform: translateY(0);
+            animation: riseUp 0.8s ease forwards;
+            animation-delay: 0.9s;
+            opacity: 0;
+            z-index: 10;
+        }
+        
+        @keyframes riseUp {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(-80px);
+                opacity: 1;
+            }
+        }
+        
+        .letter-header {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.8rem;
+            color: var(--rose);
+            text-align: center;
+            margin-bottom: 16px;
+            line-height: 1.3;
+        }
+        
+        .letter-divider {
+            border: none;
+            height: 1.5px;
+            background: linear-gradient(to right, transparent, var(--gold), transparent);
+            margin-bottom: 18px;
+        }
+        
+        .letter-body {
+            font-family: 'Lora', serif;
+            font-size: .97rem;
+            line-height: 1.85;
+            color: #3a2020;
+            text-align: justify;
+            font-style: italic;
+        }
+        
+        .letter-footer {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.2rem;
+            color: var(--rose);
+            text-align: right;
+            margin-top: 20px;
+        }
+        
+        .close-btn {
+            position: absolute;
+            top: 14px;
+            right: 14px;
+            background: none;
+            border: none;
+            color: #999;
+            font-size: 1.5rem;
+            cursor: pointer;
+            z-index: 200;
+            transition: color .2s;
+        }
+        
+        .close-btn:hover {
+            color: var(--rose);
+        }
+        /* ── Flying photos ── */
+        
+        .flying-photo {
+            position: fixed;
+            bottom: -160px;
+            width: 90px;
+            height: 90px;
+            border-radius: 10px;
+            border: 3px solid white;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, .4);
+            object-fit: cover;
+            pointer-events: none;
+            z-index: 200;
+            animation: flyUp var(--dur) ease-out forwards;
+            font-size: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: white;
+            overflow: hidden;
+        }
+        
+        @keyframes flyUp {
+            0% {
+                bottom: -160px;
+                opacity: 0;
+                transform: rotate(var(--rot)) scale(.8);
+            }
+            15% {
+                opacity: 1;
+            }
+            80% {
+                opacity: 1;
+            }
+            100% {
+                bottom: 110vh;
+                opacity: 0;
+                transform: rotate(calc(var(--rot)*2)) scale(1.1);
+            }
+        }
+        /* confetti pieces */
+        
+        .confetti-piece {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            pointer-events: none;
+            z-index: 300;
+            animation: confettiFall var(--cd) ease-in forwards;
+            opacity: 0;
+        }
+        
+        @keyframes confettiFall {
+            0% {
+                top: -20px;
+                opacity: 1;
+                transform: rotate(0deg) translateX(0);
+            }
+            100% {
+                top: 110vh;
+                opacity: 0;
+                transform: rotate(720deg) translateX(var(--cx));
+            }
+        }
+        /* hint text */
+        
+        .hint {
+            font-family: 'Lora', serif;
+            font-style: italic;
+            color: rgba(255, 255, 255, .4);
+            font-size: .85rem;
+            letter-spacing: .05em;
+            animation: hintBlink 2s ease-in-out infinite;
+        }
+        
+        @keyframes hintBlink {
+            0%,
+            100% {
+                opacity: .4
+            }
+            50% {
+                opacity: .9
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <audio id="bgMusic" autoplay loop>
+  <source src="music.mp3.mp3" type="audio/mpeg">
+</audio>
+
+    <div class="stars" id="stars"></div>
+
+    <div class="stage">
+        <!-- Title (hidden until box clicked) -->
+        <div class="title-area" id="titleArea">
+            <div class="congrats-text">🎂 Chúc Mừng Sinh Nhật Bé NHƯ 🎂</div>
+            <div class="congrats-sub">Một ngày thật đặc biệt dành cho Bé ✨</div>
+        </div>
+
+        <!-- Gift box -->
+        <div class="gift-wrap" id="giftBox">
+            <div class="box-lid">
+                <div class="bow">
+                    <div class="bow-left"></div>
+                    <div class="bow-right"></div>
+                    <div class="bow-center"></div>
+                    <div class="bow-ribbon-v"></div>
+                </div>
+            </div>
+            <div class="box-body">
+                <div class="shine"></div>
+            </div>
+            <div class="sparkle-container" id="sparkles"></div>
+        </div>
+
+        <p class="hint" id="hint">✦ Nhấn vào hộp quà ✦</p>
+
+        <!-- Bottom row -->
+        <div class="bottom-row" id="bottomRow" style="opacity:0; transition: opacity .6s ease; pointer-events:none;">
+            <img class="photo-thumb" id="photoThumb" src="images/anh1.jpg" title="Ảnh kỷ niệm">
+            <button class="open-letter-btn" id="letterBtn">✉️ Mở thư</button>
+        </div>
+    </div>
+
+    <!-- Letter overlay -->
+    <div class="letter-overlay" id="letterOverlay">
+        <button class="close-btn" id="closeBtn">✕</button>
+        <div class="envelope">
+            <div class="env-back">
+                <div class="env-flap"></div>
+            </div>
+            <div class="letter-paper">
+                <div class="letter-header">💌 Dear bé Như </div>
+                <hr class="letter-divider">
+                <p class="letter-body">
+                    Dear Như yêu 💕 Chúc mừng sinh nhật em người con gái đặc biệt trong mắt anh . Cảm ơn vì em đã đến , đã ở lại và đã chọn đồng hành cùng anh trên những chặng đường không phải lúc nào cũng dễ dàng. Anh cũng không mấy hoàn hảo, đôi lúc còn vụng về vô tình
+                    làm em buồn . Anh thật lòng xin lỗi vì điều đó , anh đang học cách trưởng thành trong từng hành động cử chỉ để có thể yêu thương em hơn . Anh tự hào về em anh thích con người ở em , mạnh mẽ , ấm áp và yêu thương tất cả mọi người xung
+                    quanh . Em như ánh sáng chiếu rọi xung quanh anh khiến anh thay đổi cách nhìn về cuộc sống và trở nên tích cực hơn. Em xứng đáng với tất cả những điều tốt đẹp này . Tuổi mới anh mong em và anh còn cũng đồng hành trên con đường dài
+                    phía trước cũng như câu em đã từng nói " yêu là khi cả hai chưa từng buông tay " . Cảm ơn em vì tất cả yêu em 💕
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <script>
+        const CONFIG = {
+            name: "NHƯ 💖",
+            message: `Chúc BÉ tuổi mới thật nhiều niềm vui, luôn hạnh phúc ❤️`,
+            images: [
+                "images/anh1.jpg",
+
+            ]
+        };
+        /* ── Stars ── */
+        const starsEl = document.getElementById('stars');
+        for (let i = 0; i < 120; i++) {
+            const s = document.createElement('div');
+            s.className = 'star';
+            s.style.cssText = `
+      left:${Math.random()*100}%; top:${Math.random()*100}%;
+      --d:${2+Math.random()*4}s; --op:${0.3+Math.random()*0.7};
+      animation-delay:${Math.random()*5}s;
+      width:${1+Math.random()*2}px; height:${1+Math.random()*2}px;
+    `;
+            starsEl.appendChild(s);
+        }
+
+        /* ── Sparkle burst ── */
+        function burstSparkles() {
+            const container = document.getElementById('sparkles');
+            const colors = ['#ffd97d', '#f07a8e', '#fff', '#e8637a', '#ffa8bb', '#ffe59e'];
+            for (let i = 0; i < 22; i++) {
+                const sp = document.createElement('div');
+                sp.className = 'sparkle';
+                const angle = (i / 22) * 360;
+                const dist = 60 + Math.random() * 80;
+                const tx = Math.cos(angle * Math.PI / 180) * dist;
+                const ty = Math.sin(angle * Math.PI / 180) * dist;
+                sp.style.cssText = `
+        background:${colors[i%colors.length]};
+        width:${4+Math.random()*8}px; height:${4+Math.random()*8}px;
+        transform:translate(-50%,-50%);
+        animation: burst .8s ease-out forwards;
+        animation-delay:${Math.random()*.15}s;
+        --tx:${tx}px; --ty:${ty}px;
+      `;
+                container.appendChild(sp);
+                setTimeout(() => sp.remove(), 1000);
+            }
+        }
+
+        /* inject burst keyframe */
+        const style = document.createElement('style');
+        style.textContent = `
+    @keyframes burst {
+      0%  { opacity:1; transform:translate(-50%,-50%) scale(0); }
+      60% { opacity:1; transform:translate(calc(-50% + var(--tx)), calc(-50% + var(--ty))) scale(1.2); }
+      100%{ opacity:0; transform:translate(calc(-50% + var(--tx)*1.4), calc(-50% + var(--ty)*1.4)) scale(.5); }
+    }
+  `;
+        document.head.appendChild(style);
+
+        /* ── Confetti ── */
+        function launchConfetti() {
+            const colors = ['#ffd97d', '#e8637a', '#a8d8ea', '#ff8fab', '#c9b1ff', '#fff'];
+            const shapes = ['circle', 'square', 'triangle'];
+            for (let i = 0; i < 60; i++) {
+                setTimeout(() => {
+                    const c = document.createElement('div');
+                    c.className = 'confetti-piece';
+                    const shape = shapes[Math.floor(Math.random() * 3)];
+                    c.style.cssText = `
+          left:${Math.random()*100}vw;
+          --cd:${1.5+Math.random()*2.5}s;
+          --cx:${(Math.random()-0.5)*200}px;
+          background:${colors[Math.floor(Math.random()*colors.length)]};
+          border-radius:${shape==='circle'?'50%':shape==='square'?'2px':'0'};
+          width:${6+Math.random()*10}px; height:${6+Math.random()*10}px;
+          animation-delay:0s;
+        `;
+                    document.body.appendChild(c);
+                    setTimeout(() => c.remove(), 4000);
+                }, i * 40);
+            }
+        }
+
+        /* ── Flying photos ── */
+        const images = [
+            "images/anh1.jpg",
+            "images/anh2.jpg",
+            "images/anh3.jpg",
+            "images/anh4.jpg",
+            "images/anh5.jpg",
+            "images/anh6.jpg"
+        ];
+
+
+        function launchPhotos() {
+            for (let i = 0; i < 10; i++) {
+                setTimeout(() => {
+                    const p = document.createElement('div');
+                    p.className = 'flying-photo';
+                    const rot = (Math.random() - 0.5) * 30;
+                    p.style.cssText = `
+          left:${5+Math.random()*85}vw;
+          --rot:${rot}deg;
+          --dur:${2.2+Math.random()*2}s;
+          animation-delay:${Math.random()*.5}s;
+          font-size:36px;
+          justify-content:center;
+        `;
+                    p.innerHTML = `<img src="${images[Math.floor(Math.random()*images.length)]}" style="width:100%;height:100%;object-fit:cover;">`;
+                    document.body.appendChild(p);
+                    setTimeout(() => p.remove(), 5000);
+                }, i * 180);
+            }
+        }
+
+        /* ── Gift box click ── */
+        let boxOpened = false;
+        document.getElementById('giftBox').addEventListener('click', () => {
+            document.getElementById("bgMusic").play();
+            if (boxOpened) {
+                burstSparkles();
+                launchConfetti();
+                return;
+            }
+            boxOpened = true;
+
+            const box = document.getElementById('giftBox');
+            box.classList.add('opened');
+            document.getElementById('hint').style.display = 'none';
+
+            burstSparkles();
+            launchConfetti();
+
+            /* Show title */
+            setTimeout(() => {
+                document.getElementById('titleArea').classList.add('visible');
+            }, 300);
+
+            /* Show bottom row */
+            setTimeout(() => {
+                const br = document.getElementById('bottomRow');
+                br.style.opacity = '1';
+                br.style.pointerEvents = 'all';
+            }, 900);
+        });
+
+        /* ── Open letter ── */
+        document.getElementById('letterBtn').addEventListener('click', () => {
+            document.getElementById('letterOverlay').classList.add('open');
+            launchPhotos();
+            launchConfetti();
+
+            /* restart flap animation */
+            const flap = document.querySelector('.env-flap');
+            flap.style.animation = 'none';
+            flap.offsetHeight; // reflow
+            flap.style.animation = 'openFlap 1s ease forwards';
+            flap.style.animationDelay = '.5s';
+
+            const paper = document.querySelector('.letter-paper');
+            paper.style.animation = 'none';
+            paper.offsetHeight;
+            paper.style.animation = 'riseUp .8s ease forwards';
+            paper.style.animationDelay = '.9s';
+            paper.style.opacity = '0';
+        });
+
+        /* ── Close letter ── */
+        document.getElementById('closeBtn').addEventListener('click', () => {
+            document.getElementById('letterOverlay').classList.remove('open');
+        });
+        document.getElementById('letterOverlay').addEventListener('click', (e) => {
+            if (e.target === document.getElementById('letterOverlay')) {
+                document.getElementById('letterOverlay').classList.remove('open');
+            }
+        });
+
+        /* ── Photo thumb click → trigger flying photos ── */
+        document.getElementById('photoThumb').addEventListener('click', () => {
+            launchPhotos();
+            launchConfetti();
+        });
+    </script>
+</body>
+
+</html>
