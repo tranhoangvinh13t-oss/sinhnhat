@@ -428,18 +428,24 @@
         /* letter paper */
         
         .letter-paper {
-            background: var(--cream);
-            border-radius: 6px;
-            padding: 36px 40px 32px;
-            position: relative;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, .25);
-            margin-top: -12px;
-            transform: translateY(0);
-            animation: riseUp 0.8s ease forwards;
-            animation-delay: 0.9s;
-            opacity: 0;
-            z-index: 10;
-        }
+  background: var(--cream);
+  border-radius: 6px;
+  padding: 36px 40px 32px;
+  position: relative;
+  box-shadow: 0 20px 60px rgba(0,0,0,.25);
+  margin-top: -12px;
+
+  transform: translateY(0);
+  animation: riseUp 0.8s ease forwards;
+  animation-delay: 0.9s;
+  opacity: 0;
+  z-index: 10;
+
+  /* ✅ THÊM DÒNG NÀY ĐỂ CUỘN ĐƯỢC */
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
         
         @keyframes riseUp {
             from {
